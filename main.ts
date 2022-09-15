@@ -20,6 +20,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
         foody = randint(0, 11) * 10
     }
     eatenflag += 1
+    for (let index = 0; index < 2; index++) {
+        snaketail.x += vx_history[0] * -1
+        snaketail.y += vy_history[0] * -1
+    }
+    vx_history.unshift(0)
+    vy_history.unshift(0)
 })
 let updatevy = 0
 let updatevx = 0
@@ -27,11 +33,14 @@ let foody = 0
 let foodx = 0
 let vy = 0
 let vx = 0
+let vy_history: number[] = []
+let vx_history: number[] = []
+let snaketail: Sprite = null
 let eatenflag = 0
 scene.setBackgroundImage(assets.image`Grid`)
 eatenflag = 0
 let snake_head = sprites.create(assets.image`snake block`, SpriteKind.Player)
-let snaketail = sprites.create(img`
+snaketail = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -70,8 +79,8 @@ let snakefood = sprites.create(img`
 snake_head.setPosition(2, 2)
 snaketail.setPosition(-8, 2)
 let snake_length = 1
-let vx_history = [-99, 1]
-let vy_history = [-99, 0]
+vx_history = [-99, 1]
+vy_history = [-99, 0]
 vx = 1
 vy = 0
 foodx = 80
